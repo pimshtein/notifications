@@ -4,8 +4,10 @@ import org.springframework.stereotype.Component
 import uts.hbpro.notification.core.handle.handler.MessageHandlerInterface
 
 @Component
-class EntryPoint(private val messageHandler: MessageHandlerInterface,
-                 private val preparation: PreparationInterface) : EntryPointInterface {
+class EntryPoint(
+        private val messageHandler: MessageHandlerInterface,
+        private val preparation: PreparationInterface
+) : EntryPointInterface {
 
     override fun handle(message: String) {
         try {
