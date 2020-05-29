@@ -4,16 +4,19 @@ import com.rabbitmq.client.AMQP
 import com.rabbitmq.client.ConnectionFactory
 import com.rabbitmq.client.DefaultConsumer
 import com.rabbitmq.client.Envelope
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 import uts.hbpro.notification.core.entrypoint.EntryPointInterface
 import uts.hbpro.notification.worker.WorkerInterface
 import uts.hbpro.notification.worker.amqp.config.Arguments
 import java.io.IOException
 
-class Worker(private val args: Arguments) : WorkerInterface {
-    // TODO change to autowire
+@Component
+class Worker : WorkerInterface {
+    @Autowired
     lateinit var entryPoint: EntryPointInterface
-
-    override fun start() {
+    
+    override fun start(args: Arguments) {
         // Create connection.
         val factory = ConnectionFactory()
         factory.host = args.host
