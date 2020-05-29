@@ -1,19 +1,19 @@
 package uts.hbpro.notification.core.entrypoint
 
-import uts.hbpro.notification.core.handle.MessageHandler
+import org.springframework.stereotype.Component
+import uts.hbpro.notification.core.handle.handler.MessageHandlerInterface
 
-class EntryPoint(): EntryPointInterface {
-    // TODO change to autowire
-    private val preparation = Preparation()
-    private val messageHandler = MessageHandler()
+@Component
+class EntryPoint(private val messageHandler: MessageHandlerInterface,
+                 private val preparation: PreparationInterface) : EntryPointInterface {
 
     override fun handle(message: String) {
         try {
             // Prepare message and get serialized object.
-            preparation.prepare(message)
+            val messageData = preparation.prepare(message)
 
             // Process business logic.
-            messageHandler.handle(message)
+            messageHandler.handle(messageData)
         } catch (_ignored: InterruptedException) {
             Thread.currentThread().interrupt()
         }

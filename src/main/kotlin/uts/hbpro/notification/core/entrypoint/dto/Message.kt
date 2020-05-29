@@ -1,6 +1,6 @@
 package uts.hbpro.notification.core.entrypoint.dto
 
-data class Message<T>(
+data class Message(
     val header: Header,
-    val body: List<T>
+    val body: Map<String, Any>
 )

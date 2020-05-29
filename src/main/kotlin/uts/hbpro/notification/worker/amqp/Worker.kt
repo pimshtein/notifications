@@ -4,14 +4,14 @@ import com.rabbitmq.client.AMQP
 import com.rabbitmq.client.ConnectionFactory
 import com.rabbitmq.client.DefaultConsumer
 import com.rabbitmq.client.Envelope
+import uts.hbpro.notification.core.entrypoint.EntryPointInterface
 import uts.hbpro.notification.worker.WorkerInterface
-import uts.hbpro.notification.core.entrypoint.EntryPoint
 import uts.hbpro.notification.worker.amqp.config.Arguments
 import java.io.IOException
 
 class Worker(private val args: Arguments) : WorkerInterface {
     // TODO change to autowire
-    private val entryPoint = EntryPoint()
+    lateinit var entryPoint: EntryPointInterface
 
     override fun start() {
         // Create connection.
@@ -38,8 +38,6 @@ class Worker(private val args: Arguments) : WorkerInterface {
                     body: ByteArray
             ) {
                 val message = String(body, charset("UTF-8"))
-
-                println(" [x] Received '$message'")
                 try {
                     entryPoint.handle(message)
                 } finally {
