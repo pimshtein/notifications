@@ -1,18 +1,21 @@
 package uts.hbpro.notification.core.entrypoint
 
-class EntryPoint() {
-    companion object {
-        private val preparation = Preparation()
-        fun handle(message: String) {
-            try {
-                preparation.prepare(message)
-                // Get event from database.
-                // Get locale, recipients etc.
-                // Compose html message from database text.
-                // Send message to recipients.
-            } catch (_ignored: InterruptedException) {
-                Thread.currentThread().interrupt()
-            }
+import uts.hbpro.notification.core.handle.MessageHandler
+
+class EntryPoint(): EntryPointInterface {
+    // TODO change to autowire
+    private val preparation = Preparation()
+    private val messageHandler = MessageHandler()
+
+    override fun handle(message: String) {
+        try {
+            // Prepare message and get serialized object.
+            preparation.prepare(message)
+
+            // Process business logic.
+            messageHandler.handle(message)
+        } catch (_ignored: InterruptedException) {
+            Thread.currentThread().interrupt()
         }
     }
 }

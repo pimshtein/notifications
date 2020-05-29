@@ -10,6 +10,9 @@ import uts.hbpro.notification.worker.amqp.config.Arguments
 import java.io.IOException
 
 class Worker(private val args: Arguments) : WorkerInterface {
+    // TODO change to autowire
+    private val entryPoint = EntryPoint()
+
     override fun start() {
         // Create connection.
         val factory = ConnectionFactory()
@@ -38,7 +41,7 @@ class Worker(private val args: Arguments) : WorkerInterface {
 
                 println(" [x] Received '$message'")
                 try {
-                    EntryPoint.handle(message)
+                    entryPoint.handle(message)
                 } finally {
                     println(" [x] Done")
                     channel.basicAck(envelope.deliveryTag, false)
@@ -46,7 +49,7 @@ class Worker(private val args: Arguments) : WorkerInterface {
             }
         }
 
-        channel.basicConsume(args.queue, true, consumer)
+        channel.basicConsume(args.queue, false, consumer)
 
         println(" [*] Waiting for messages. To exit press CTRL+C")
     }
