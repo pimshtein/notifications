@@ -5,7 +5,7 @@ import com.rabbitmq.client.ConnectionFactory
 import com.rabbitmq.client.DefaultConsumer
 import com.rabbitmq.client.Envelope
 import uts.hbpro.notification.worker.WorkerInterface
-import kotlinx.coroutines.*
+import uts.hbpro.notification.core.entrypoint.EntryPoint
 import uts.hbpro.notification.worker.amqp.config.Arguments
 import java.io.IOException
 
