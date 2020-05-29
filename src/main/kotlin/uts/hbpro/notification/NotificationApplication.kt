@@ -2,8 +2,6 @@ package uts.hbpro.notification
 
 import com.xenomachina.argparser.ArgParser
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import uts.hbpro.notification.core.entrypoint.EntryPoint
-import uts.hbpro.notification.core.entrypoint.Preparation
 import uts.hbpro.notification.worker.amqp.config.Arguments
 import uts.hbpro.notification.worker.amqp.Worker
 
